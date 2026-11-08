@@ -1,0 +1,66 @@
+manni.co work log - 2026-11-08
+================================
+
+Goal
+----
+Get Mannicode LLC approved for the Apple Developer Program (organization
+enrollment) and Twilio (A2P 10DLC brand/campaign registration for Blu-cru).
+Both require a real, live company website on manni.co.
+
+Decisions
+---------
+- Hosting: GitHub Pages (repo mannicar/manni-co), not Heroku.
+- Blu-cru is a product of Mannicode LLC (no separate company), so it lives
+  as a page on manni.co rather than its own domain. The Twilio brand is
+  Mannicode LLC; Blu-cru texts should be prefixed "Blu-cru:".
+- Company description: "Mannicode LLC is a software development company that
+  builds its own mobile and web apps and partners with clients to design and
+  develop custom software."
+- Contact info on the site:
+    Mannicode LLC
+    8 Isle of Venice Dr, Unit 10
+    Fort Lauderdale, FL 33301
+    support@manni.co / +1 (754) 202-8265
+
+Site changes (commits da9a0d7, b49ed35)
+---------------------------------------
+- index.html   - Mannicode homepage: description, Blu-cru product card, contact.
+- blu-cru.html - Blu-cru description, SMS message types, opt-in flow with exact
+                 consent checkbox wording (unchecked by default), STOP/HELP.
+- privacy.html - Privacy policy incl. Twilio-required language: no mobile info
+                 shared with third parties/affiliates for marketing; opt-in
+                 data and consent not shared with third parties.
+- terms.html   - Terms incl. Blu-cru SMS program disclosures (message types,
+                 frequency varies, msg & data rates, STOP, HELP, carrier
+                 disclaimer).
+- style.css / logo.svg - Branding from ~/Downloads/MannicodeLogo brand guide:
+                 #1E1E1E background, #E7E7E7 text, purple #7A63FF, cyan
+                 #74E0EF links, magenta #EF75FD hover, Work Sans font. Hexagon
+                 logo appears once (small, in the header) and as the favicon.
+
+DNS cutover (Squarespace panel, Google Cloud DNS nameservers ns-cloud-c1..c4)
+---------------------------------------------------------------------------
+- Removed Wix A record 23.236.62.147.
+- Added four A records at @ (TTL 4 hr, Squarespace forced it):
+    185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153
+- Changed www CNAME from www158.wixdns.net to mannicar.github.io.
+- Verified on all four nameservers. MX (Google Workspace), SPF, DKIM
+  (google._domainkey) and the MS= TXT record are unchanged.
+- Verified GitHub Pages serves the new site for manni.co.
+
+Rollback: A @ -> 23.236.62.147 and CNAME www -> www158.wixdns.net
+(allow up to ~4 hr for caches given the TTL).
+
+Remaining
+---------
+- GitHub > Settings > Pages: wait for "DNS check successful", then tick
+  "Enforce HTTPS".
+- Confirm https://manni.co and https://www.manni.co load the new site.
+- Send a test email to/from an @manni.co address.
+- Make sure support@manni.co exists in Google Workspace (user/group/alias).
+- Confirm the Blu-cru opt-in flow and message types on blu-cru.html match how
+  the app actually works; Twilio campaign registration must match the site.
+- Twilio: Trust Hub Business Profile -> A2P brand -> campaign, using
+  https://manni.co/blu-cru.html (opt-in) and https://manni.co/privacy.html.
+- Apple: enroll as Company/Organization using https://manni.co and an
+  @manni.co Apple Account (D-U-N-S already on hand).

@@ -1,0 +1,4 @@
+# GitHub Pages (Jekyll) build settings
+# Kept in the repo but not published to manni.co:
+exclude:
+  - worklog
